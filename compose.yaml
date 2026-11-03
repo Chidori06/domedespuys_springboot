@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    image: mariadb:13.0.2
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: db_domedespuys
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.docker/mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.3
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy

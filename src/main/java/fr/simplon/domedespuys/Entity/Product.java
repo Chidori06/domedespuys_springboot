@@ -40,7 +40,4 @@ public class Product {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Brand brand;
-
-    @OneToMany(mappedBy = "product")
-    List<OrderProduct> productOrder;
 }

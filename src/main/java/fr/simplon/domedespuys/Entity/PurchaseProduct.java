@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class OrderProduct {
+public class PurchaseProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

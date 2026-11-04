@@ -26,7 +26,7 @@ public class Brand {
     @Column(nullable= false)
     private String slug;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "brand")
     List<Product> products;
 
 }

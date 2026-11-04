@@ -49,6 +49,4 @@ public class Address {
     @JoinColumn(nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "address")
-    List<Purchase> purchases;
 }

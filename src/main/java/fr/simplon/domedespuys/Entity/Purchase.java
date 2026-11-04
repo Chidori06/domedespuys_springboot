@@ -35,6 +35,6 @@ public class Purchase {
     private Address address;
 
     @OneToMany(mappedBy = "purchase")
-    List<OrderProduct> orderProduct;
+    List<PurchaseProduct> orderProduct;
 
 }

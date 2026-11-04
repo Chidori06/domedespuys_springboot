@@ -6,7 +6,7 @@ services:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: db_domedespuys
     ports:
-      - "3306:3306"
+      - "3506:3306"
     volumes:
       - ./.docker/mariadb:/var/lib/mysql
     healthcheck:
@@ -19,7 +19,7 @@ services:
     image: phpmyadmin:5.2.3
     environment:
       PMA_HOST: mariadb
-      PMA_PORT: 3306
+      #PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
     ports:

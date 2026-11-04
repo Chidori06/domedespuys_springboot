@@ -1,6 +1,8 @@
 package fr.simplon.domedespuys.Entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable= false)
+    @Column(nullable= false, length= 120)
     private String email;
 
     @Column(nullable= false)
@@ -34,5 +36,11 @@ public class User {
 
     @Column(nullable= false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user")
+   List<Address> addresses;
+
+    @OneToMany(mappedBy = "user")
+    List<Purchase> purchases;
 
 }

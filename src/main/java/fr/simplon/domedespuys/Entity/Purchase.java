@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "purchase")
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,20 @@ public class Purchase {
     private String number;
 
     @Column(nullable = false)
-    private EnumPurchaseStatus status = EnumPurchaseStatus.PENDING;
+    private String status = EnumPurchaseStatus.PENDING.getValue();
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private User user;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Address address;
+
+    @OneToMany(mappedBy = "purchase")
+    List<OrderProduct> orderProduct;
 
 }

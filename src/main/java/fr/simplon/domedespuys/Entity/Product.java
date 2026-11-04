@@ -1,6 +1,7 @@
 package fr.simplon.domedespuys.Entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +33,14 @@ public class Product {
 
     @Column(nullable= false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "product")
+    List<Image> images;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Brand brand;
+
+    @OneToMany(mappedBy = "product")
+    List<OrderProduct> productOrder;
 }

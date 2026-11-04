@@ -20,4 +20,9 @@ public class Image {
 
     @Column(nullable= false)
     private Boolean isDefault;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Product product;
+
 }

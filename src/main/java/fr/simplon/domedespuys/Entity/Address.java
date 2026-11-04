@@ -1,6 +1,7 @@
 package fr.simplon.domedespuys.Entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,4 +44,11 @@ public class Address {
 
     @Column(nullable= false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "address")
+    List<Purchase> purchases;
 }

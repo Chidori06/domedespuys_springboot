@@ -20,4 +20,14 @@ public class OrderProduct {
 
     @Column(nullable= false)
     private Long price;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Purchase purchase;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Product product;
+
+
 }

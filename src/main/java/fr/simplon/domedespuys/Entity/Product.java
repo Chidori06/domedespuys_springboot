@@ -1,6 +1,7 @@
 package fr.simplon.domedespuys.Entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -21,8 +22,7 @@ public class Product {
     @Column(nullable= false)
     private String label;
 
-    @Lob
-    @Column()
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable= false)
@@ -35,7 +35,7 @@ public class Product {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "product")
-    List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)

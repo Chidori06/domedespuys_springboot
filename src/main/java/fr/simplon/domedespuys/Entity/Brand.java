@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,13 +21,13 @@ public class Brand {
     @Column(nullable= false)
     private String label;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String logo;
 
     @Column(nullable= false)
     private String slug;
 
     @OneToMany(mappedBy = "brand")
-    List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
 }

@@ -15,8 +15,11 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable= false)
+    @Column(nullable= false, columnDefinition = "TEXT")
     private String path;
+
+    @Column(nullable = false, length=180)
+    private String extension;
 
     @Column(nullable= false)
     private Boolean isDefault;

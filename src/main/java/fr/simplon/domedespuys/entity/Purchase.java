@@ -1,4 +1,4 @@
-package fr.simplon.domedespuys.Entity;
+package fr.simplon.domedespuys.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

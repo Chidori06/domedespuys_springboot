@@ -1,4 +1,4 @@
-package fr.simplon.domedespuys.Entity;
+package fr.simplon.domedespuys.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;

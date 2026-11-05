@@ -1,33 +1,33 @@
-package fr.simplon.domedespuys.Entity;
+package fr.simplon.domedespuys.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Brand {
+public class PurchaseProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable= false)
-    private String label;
-
-    @Column(columnDefinition = "TEXT")
-    private String logo;
+    private Integer quantity;
 
     @Column(nullable= false)
-    private String slug;
+    private Long price;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Product> products = new ArrayList<>();
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Purchase purchase;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Product product;
+
 
 }

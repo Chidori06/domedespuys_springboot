@@ -1,4 +1,4 @@
-package fr.simplon.domedespuys.Entity;
+package fr.simplon.domedespuys.entity;
 
 import lombok.Getter;
 

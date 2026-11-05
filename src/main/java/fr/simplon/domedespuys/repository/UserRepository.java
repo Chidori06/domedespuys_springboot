@@ -1,6 +1,6 @@
-package fr.simplon.domedespuys.Repository;
+package fr.simplon.domedespuys.repository;
 
-import fr.simplon.domedespuys.Entity.User;
+import fr.simplon.domedespuys.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

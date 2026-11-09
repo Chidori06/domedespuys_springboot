@@ -11,7 +11,6 @@ public class AddressView {
     public interface Firstname{}
     public interface Lastname{}
     public interface CreatedAt{}
-    public interface User{}
 
     public interface AddressListView extends Line,City,ZipCode {}
     public interface AddressDetailView extends AddressListView,
@@ -20,7 +19,5 @@ public class AddressView {
             Phone,
             Firstname,
             Lastname,
-            CreatedAt,
-            User,
-            UserView.UserListView{}
+            CreatedAt{}
 }

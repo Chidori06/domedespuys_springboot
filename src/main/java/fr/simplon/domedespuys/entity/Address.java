@@ -58,7 +58,6 @@ public class Address {
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    @JsonView(AddressView.User.class)
     private User user;
 
 }

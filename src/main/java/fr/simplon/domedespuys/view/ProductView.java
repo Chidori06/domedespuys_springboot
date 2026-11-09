@@ -11,10 +11,12 @@ public class ProductView {
     public interface Images {}
     public interface MainImage {}
 
-    public interface ProductListView extends Label, Price, Slug, MainImage{}
+    public interface ProductListView extends Label, Price, Slug, MainImage, ImageView.Path{}
     public interface ProductDetailView extends ProductListView,
             Description,
             Brand,
+            BrandView.Label,
+            BrandView.Slug,
             Images,
             ImageView.ImageListView {}
 }

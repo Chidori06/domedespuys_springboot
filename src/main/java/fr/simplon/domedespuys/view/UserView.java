@@ -14,7 +14,9 @@ public class UserView {
     public interface UserDetailView extends UserListView,
             Phone,
             CreatedAt,
+            Address,
             AddressView.AddressDetailView,
+            Purchase,
             PurchaseView.PurchaseListView{}
 
 }

@@ -32,7 +32,6 @@ public class Image {
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    @JsonView(ImageView.Products.class)
     private Product product;
 
 }

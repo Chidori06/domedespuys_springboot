@@ -1,5 +1,6 @@
 package fr.simplon.domedespuys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,15 +19,16 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable= false)
+    @Column(nullable = false)
     private String label;
 
     @Column(columnDefinition = "TEXT")
     private String logo;
 
-    @Column(nullable= false)
+    @Column(nullable = false)
     private String slug;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "brand")
     private List<Product> products = new ArrayList<>();
 

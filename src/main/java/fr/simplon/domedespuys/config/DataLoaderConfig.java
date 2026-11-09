@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
@@ -26,6 +27,7 @@ public class DataLoaderConfig implements CommandLineRunner {
     private ProductRepository productRepository;
     private ImageRepository imageRepository;
     private PurchaseRepository purchaseRepository;
+    private PurchaseProductRepository purchaseProductRepository;
 
 
     @Override
@@ -36,6 +38,8 @@ public class DataLoaderConfig implements CommandLineRunner {
         createAddresses();
         createProducts();
         createImages();
+        createPurchases();
+        createPurchaseProducts();
 
     }
 
@@ -170,44 +174,87 @@ public class DataLoaderConfig implements CommandLineRunner {
         }
     }
 
-//    private void createPurchases() {
-//        if (0 == purchaseRepository.count()) {
-//            Faker faker = new Faker(Locale.of("fr"));
-//            for (int i = 0; i < 100; i++) {
-//                Purchase purchase = new Purchase();
-//
-//                int currentYear = LocalDate.now().getYear();
-//                purchase.setNumber("PUR-" + currentYear + "-" + "000" + faker.number().digit());
-//
-//                purchase.setStatus(String.valueOf(getRandomStatus(faker)));
-//
-//                Random random = new Random();
-//                Long userId = random.nextLong(1, 100);
-//                Optional<User> optionalUser = userRepository.findById(userId);
-//                optionalUser.ifPresent(purchase::setUser);
-//
-//            }
-//        }
-//    }
+    private void createPurchases() {
+        if (0 == purchaseRepository.count()) {
+            Faker faker = new Faker(Locale.of("fr"));
+            for (int i = 0; i < 100; i++) {
+                Purchase purchase = new Purchase();
 
-//    private void createPurchaseProducts() {
-//
-//    }
+                int currentYear = LocalDate.now().getYear();
+                purchase.setNumber("PUR-" + currentYear + "-" + "0000" + i);
 
-//    private EnumPurchaseStatus getRandomStatus(Faker faker) {
-//        if (hasProbability(7, 10)) {
-//            return EnumPurchaseStatus.PENDING;
-//        }
-//
-//        EnumPurchaseStatus[] statuses = {
-//                EnumPurchaseStatus.PAID,
-//                EnumPurchaseStatus.SHIPPED,
-//                EnumPurchaseStatus.DELIVERED,
-//                EnumPurchaseStatus.CANCELLED
-//        };
-//
-//        return statuses[faker.random().nextInt(statuses.length)];
-//    }
+                purchase.setStatus(String.valueOf(getRandomStatus(faker)));
+                Random random = new Random();
+
+                Long userId = random.nextLong(1, 101);
+                Optional<User> optionalUser = userRepository.findById(userId);
+
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get();
+                    purchase.setUser(user);
+
+                    List<Address> addresses = addressRepository.findByUserId(userId);
+
+                    if (addresses.isEmpty()) {
+                        continue;
+                    }
+
+                    long addressIndex = random.nextLong(addresses.size());
+                    Address address = addresses.get((int) addressIndex);
+
+                    purchase.setAddress(address);
+                    purchase.setCreatedAt(getRandomDate(faker, 0, 5));
+
+                    purchaseRepository.save(purchase);
+                }
+                purchaseRepository.flush();
+            }
+        }
+    }
+
+    private void createPurchaseProducts() {
+        if (0 == purchaseProductRepository.count()) {
+            Faker faker = new Faker(Locale.of("fr"));
+            Random random = new Random();
+
+            for (int i = 0; i < 150; i++) {
+                PurchaseProduct purchaseProduct = new PurchaseProduct();
+
+                Long purchaseId = random.nextLong(1, 101);
+                Optional<Purchase> optionalPurchase = purchaseRepository.findById(purchaseId);
+
+                Long productId = random.nextLong(1, 151);
+                Optional<Product> optionalProduct = productRepository.findById(productId);
+
+                if (optionalPurchase.isPresent() && optionalProduct.isPresent()) {
+                    purchaseProduct.setPurchase(optionalPurchase.get());
+                    purchaseProduct.setProduct(optionalProduct.get());
+
+                    purchaseProduct.setQuantity(faker.random().nextInt(1, 6));
+
+                    purchaseProduct.setPrice(optionalProduct.get().getPrice());
+
+                    purchaseProductRepository.save(purchaseProduct);
+                }
+            }
+            purchaseProductRepository.flush();
+        }
+    }
+
+    private EnumPurchaseStatus getRandomStatus(Faker faker) {
+        if (hasProbability(7, 10)) {
+            return EnumPurchaseStatus.PENDING;
+        }
+
+        EnumPurchaseStatus[] statuses = {
+                EnumPurchaseStatus.PAID,
+                EnumPurchaseStatus.SHIPPED,
+                EnumPurchaseStatus.DELIVERED,
+                EnumPurchaseStatus.CANCELLED
+        };
+
+        return statuses[faker.random().nextInt(statuses.length)];
+    }
 
     private LocalDateTime getRandomDate(Faker faker, int min, int max) {
         return new java.sql.Date(faker.date().birthday(min, max).getTime()).toLocalDate().atTime(0, 0);

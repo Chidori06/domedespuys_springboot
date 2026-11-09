@@ -7,6 +7,10 @@ public class PurchaseProductView {
     public interface Purchases{}
     public interface Products{}
 
-    public interface PurchaseProductListView{}
-    public interface PurchaseProductDetailView{}
+    public interface PurchaseProductListView extends Quantity, Price{}
+    public interface PurchaseProductDetailView extends PurchaseProductListView,
+            Purchases,
+            PurchaseView.PurchaseListView,
+            Products,
+            ProductView.ProductListView{}
 }

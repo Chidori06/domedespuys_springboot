@@ -11,7 +11,10 @@ public class UserView {
     public interface Purchase{}
 
     public interface UserListView extends Email, Firstname, Lastname{}
-    //Ajouter Purchase
-    public interface UserDetailView extends UserListView,Phone,CreatedAt, AddressView.AddressDetailList {}
+    public interface UserDetailView extends UserListView,
+            Phone,
+            CreatedAt,
+            AddressView.AddressDetailView,
+            PurchaseView.PurchaseListView{}
 
 }

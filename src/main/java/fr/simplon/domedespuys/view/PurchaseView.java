@@ -9,6 +9,12 @@ public class PurchaseView {
     public interface Address{}
     public interface OrderProduct{}
 
-    public interface PurchaseListView extends Number, Status {}
-    public interface PurchaseDetailView {}
+    public interface PurchaseListView extends Number, Status, CreatedAt {}
+    public interface PurchaseDetailView extends PurchaseListView,
+            User,
+            UserView.UserListView,
+            Address,
+            AddressView.AddressListView,
+            OrderProduct,
+            PurchaseProductView.PurchaseProductListView {}
 }

@@ -1,6 +1,5 @@
 package fr.simplon.domedespuys.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.simplon.domedespuys.view.BrandView;
 import jakarta.persistence.*;

@@ -19,12 +19,17 @@ public class ProductRestController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    private List<Product> getProducts() {
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
+    @GetMapping("/slug/{slug}")
+    public Optional<Product> getProductBySlug(@PathVariable String slug){
+        return productRepository.findBySlug(slug);
+    }
+
     @GetMapping("/{id}")
-    private Optional<Product> getProductById(@PathVariable String id) {
+    public Optional<Product> getProductById(@PathVariable String id) {
         return productRepository.findById(Long.valueOf(id));
     }
 

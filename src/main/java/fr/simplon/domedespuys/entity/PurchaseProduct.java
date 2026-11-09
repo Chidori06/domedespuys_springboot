@@ -16,10 +16,10 @@ public class PurchaseProduct {
     private Long id;
 
     @Column(nullable= false)
-    private Integer quantity;
+    private int quantity;
 
     @Column(nullable= false)
-    private Long price;
+    private int price;
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)

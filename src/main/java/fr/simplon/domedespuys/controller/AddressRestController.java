@@ -1,34 +1,36 @@
 package fr.simplon.domedespuys.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import fr.simplon.domedespuys.dto.AddressDTO;
 import fr.simplon.domedespuys.entity.Address;
-import fr.simplon.domedespuys.repository.AddressRepository;
+import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import fr.simplon.domedespuys.view.AddressView;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/address")
 public class AddressRestController {
 
-    private final AddressRepository addressRepository;
+    private final IAddressService addressService;
 
-    @GetMapping
-    @JsonView(AddressView.AddressListView.class)
-    public List<Address> getAddresses(){
-        return addressRepository.findAll();
+    @PostMapping
+    @JsonView(AddressView.AddressDetailView.class)
+    public Address createAddress(@RequestBody AddressDTO dto){
+        return addressService.create(dto);
     }
 
-    @GetMapping("/{id}")
+    @PutMapping("/{id}")
     @JsonView(AddressView.AddressDetailView.class)
-    public Optional<Address> getAddressById(@PathVariable String id){
-        return addressRepository.findById(Long.valueOf(id));
+    public Address updateAddress(@PathVariable String id, @RequestBody AddressDTO dto){
+        return addressService.update(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    @JsonView(AddressView.AddressDetailView.class)
+    public boolean deleteAddress(@PathVariable String id){
+        return addressService.delete(id);
     }
 }

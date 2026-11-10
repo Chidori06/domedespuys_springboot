@@ -41,9 +41,9 @@ public class BrandRestController {
       return brandService.update(id,dto);
     }
 
-  @DeleteMapping("/{id}")
-  @JsonView(BrandView.BrandDetailView.class)
-  public boolean deleteBrand(@PathVariable String id) {
+    @DeleteMapping("/{id}")
+    @JsonView(BrandView.BrandDetailView.class)
+    public boolean deleteBrand(@PathVariable String id) {
     return brandService.delete(id);
   }
 

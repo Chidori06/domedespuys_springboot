@@ -9,5 +9,5 @@ public class ProductDTO {
     public String description;
     public int price;
     public Long idBrand;
-    public List<Image> images;
+    public String imagePath;
 }

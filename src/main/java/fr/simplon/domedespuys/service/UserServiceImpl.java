@@ -18,7 +18,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User create(UserPostDTO dto) {
-        //Penser au CreatedAt
         User user = new User();
         user.setEmail(dto.email);
         user.setFirstname(dto.firstname);
@@ -35,13 +34,35 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User update(String id, UserPutDTO dto) {
+        User user = getById(id);
+        if(user != null){
+            dtoToObject(dto, user);
+        }
         return user;
     }
 
     @Override
     public boolean delete(String id) {
+        User user = getById(id);
+
+        if (user != null) {
+            user.setEmail("anonyme_" + user.getId() + "@deleted.fr");
+            user.setFirstname("Anonyme");
+            user.setLastname("Anonyme");
+            user.setPassword(" ");
+            user.setPhone(null);
+
+            userRepository.saveAndFlush(user);
+            return true;
+        }
         return false;
     }
 
+    private void dtoToObject(UserPutDTO dto, User user){
+        user.setLastname(dto.lastname);
+        user.setFirstname(dto.firstname);
+        user.setPhone(dto.phone);
+        userRepository.saveAndFlush(user);
+    }
 
 }

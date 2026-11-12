@@ -52,18 +52,4 @@ public class Product {
     @JsonView(ProductView.Brand.class)
     private Brand brand;
 
-    public void addImage(Image image) {
-        images.add(image);
-        image.setProduct(this);
-    }
-
-    @JsonView(ProductView.MainImage.class)
-    public Image getMainImage() {
-        for (Image image : images) {
-            if (image.getIsDefault()) {
-                return image;
-            }
-        }
-        return null;
-    }
 }

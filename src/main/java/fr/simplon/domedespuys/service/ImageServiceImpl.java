@@ -27,6 +27,12 @@ public class ImageServiceImpl implements IImageService {
 
     @Override
     public boolean delete(String id) {
+        try{
+            imageRepository.deleteById(Long.parseLong(id));
+            return true;
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 }

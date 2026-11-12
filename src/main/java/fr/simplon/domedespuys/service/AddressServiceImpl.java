@@ -3,11 +3,11 @@ package fr.simplon.domedespuys.service;
 import fr.simplon.domedespuys.dto.AddressDTO;
 import fr.simplon.domedespuys.entity.Address;
 import fr.simplon.domedespuys.repository.AddressRepository;
+import fr.simplon.domedespuys.repository.UserRepository;
 import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -16,19 +16,20 @@ import java.time.LocalDateTime;
 public class AddressServiceImpl implements IAddressService {
 
     private final AddressRepository addressRepository;
+    private UserRepository userRepository;
 
     @Override
     public Address create(AddressDTO dto) {
-        //Penser au CreatedAt et User
         Address address = new Address();
         dtoToObject(dto, address);
         address.setCreatedAt(LocalDateTime.now());
-        //address.setUser();
+        String idUser = "7";
+        address.setUser(userRepository.findById(Long.parseLong(idUser)).orElse(null));
         addressRepository.saveAndFlush(address);
         return address;
     }
 
-    private Address getById(String id) {
+    public Address getById(String id) {
         return addressRepository.findById(Long.parseLong(id)).orElse(null);
     }
 

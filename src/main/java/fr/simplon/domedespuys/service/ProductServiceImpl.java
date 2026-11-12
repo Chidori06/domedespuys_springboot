@@ -25,11 +25,8 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product create(ProductDTO dto) {
         Product product = new Product();
-        product.setLabel(dto.label);
-        product.setPrice(dto.price);
-        product.setCreatedAt(LocalDateTime.now());
-        product.setBrand(brandService.getById(dto.idBrand));
-        return null;
+        dtoToObject(dto, product);
+        return product;
     }
 
     @Override
@@ -40,6 +37,19 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product update(String id, ProductDTO dto) {
-        return null;
+        Product product = getById(id);
+        if(product!= null){
+            dtoToObject(dto, product);
+        }
+        return product;
     }
+
+    private void dtoToObject(ProductDTO dto, Product product){
+        product.setLabel(dto.label);
+        product.setPrice(dto.price);
+        product.setCreatedAt(LocalDateTime.now());
+        product.setBrand(brandService.getById(dto.idBrand));
+        productRepository.saveAndFlush(product);
+    }
+
 }

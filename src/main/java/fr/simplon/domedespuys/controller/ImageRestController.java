@@ -3,6 +3,7 @@ package fr.simplon.domedespuys.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.simplon.domedespuys.dto.ImageDTO;
 import fr.simplon.domedespuys.entity.Image;
+import fr.simplon.domedespuys.entity.Product;
 import fr.simplon.domedespuys.service.interfaces.IImageService;
 import fr.simplon.domedespuys.view.ImageView;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,8 @@ public class ImageRestController {
 
     @PostMapping
     @JsonView(ImageView.ImageListView.class)
-    public Image createImage(@RequestBody ImageDTO dto){
-        return imageService.create(dto);
+    public Image createImage(@RequestBody ImageDTO dto, Product product){
+        return imageService.create(dto, product);
     }
 
     @DeleteMapping("/{id}")

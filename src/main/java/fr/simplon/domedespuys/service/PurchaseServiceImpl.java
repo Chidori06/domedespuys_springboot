@@ -1,40 +1,81 @@
 package fr.simplon.domedespuys.service;
 
 import fr.simplon.domedespuys.dto.PurchasePostDTO;
+import fr.simplon.domedespuys.dto.PurchaseProductDTO;
 import fr.simplon.domedespuys.dto.PurchasePutDTO;
-import fr.simplon.domedespuys.entity.Product;
+import fr.simplon.domedespuys.entity.EnumPurchaseStatus;
 import fr.simplon.domedespuys.entity.Purchase;
+import fr.simplon.domedespuys.entity.PurchaseProduct;
+import fr.simplon.domedespuys.repository.AddressRepository;
 import fr.simplon.domedespuys.repository.PurchaseRepository;
+import fr.simplon.domedespuys.service.interfaces.IPurchaseProductService;
 import fr.simplon.domedespuys.service.interfaces.IPurchaseService;
+import fr.simplon.domedespuys.service.interfaces.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class PurchaseServiceImpl implements IPurchaseService {
+
     private PurchaseRepository purchaseRepository;
+    private final AddressRepository addressRepository;
+
+    private final IUserService userService;
+    private final IPurchaseProductService purchaseProductService;
+
 
     @Override
     public List<Purchase> getCollection() {
-        return List.of();
+        return purchaseRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Purchase create(PurchasePostDTO dto) {
-        //Penser au CreatedAt, User, Status, Number
+        Purchase purchase = new Purchase();
+        purchase.setCreatedAt(LocalDateTime.now());
+        purchase.setStatus(EnumPurchaseStatus.PENDING.getValue());
+        purchase.setUser(userService.getById("8"));
+        purchase.setAddress(addressRepository.findById(Long.parseLong(dto.idAddress))
+                .orElseThrow(() -> new RuntimeException("Adresse introuvable")));
+        purchaseRepository.saveAndFlush(purchase);
+        String number = String.format(
+                "PUR-%d-%011d",
+                LocalDateTime.now().getYear(),
+                purchase.getId()
+        );
+        purchase.setNumber(number);
+        purchaseRepository.saveAndFlush(purchase);
+        List<PurchaseProduct> orderProducts = new ArrayList<>();
+        for (PurchaseProductDTO dtoProduct : dto.orderProducts) {
+            PurchaseProduct purchaseProduct = purchaseProductService.create(purchase, dtoProduct);
 
-        return null;
+            orderProducts.add(purchaseProduct);
+        }
+        purchase.setOrderProduct(orderProducts);
+
+        purchaseRepository.saveAndFlush(purchase);
+        return purchase;
     }
 
     @Override
     public Purchase getById(String id) {
-        return null;
+        return purchaseRepository.findById(Long.parseLong(id)).orElse(null);
     }
 
     @Override
     public Purchase update(String id, PurchasePutDTO dto) {
-        return null;
+        Purchase purchase = getById(id);
+        if (purchase != null) {
+            purchase.setStatus(dto.Status);
+            purchaseRepository.saveAndFlush(purchase);
+        }
+        return purchase;
     }
 }

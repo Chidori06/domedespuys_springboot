@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +45,8 @@ public class PurchaseServiceImpl implements IPurchaseService {
         purchase.setUser(userService.getById("8"));
         purchase.setAddress(addressRepository.findById(Long.parseLong(dto.idAddress))
                 .orElseThrow(() -> new RuntimeException("Adresse introuvable")));
-        purchaseRepository.saveAndFlush(purchase);
-        String number = String.format(
-                "PUR-%d-%011d",
-                LocalDateTime.now().getYear(),
-                purchase.getId()
-        );
+        String number = "PUR-" + LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-ddHHmm"));
         purchase.setNumber(number);
         purchaseRepository.saveAndFlush(purchase);
         List<PurchaseProduct> orderProducts = new ArrayList<>();

@@ -5,6 +5,6 @@ import fr.simplon.domedespuys.entity.PurchaseProduct;
 import java.util.List;
 
 public class PurchasePostDTO {
-    public Long idAddress;
+    public String idAddress;
     public List<PurchaseProductDTO> orderProducts;
 }

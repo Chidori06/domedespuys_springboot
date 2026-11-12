@@ -24,10 +24,7 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public Brand create(BrandDTO dto){
         Brand brand = new Brand();
-        brand.setLabel(dto.label);
-        brand.setLogo(dto.logo);
-        brand.setSlug(slugger.slugify(dto.label));
-        brandRepository.saveAndFlush(brand);
+        dtoToObject(dto, brand);
         return brand;
     }
 
@@ -35,6 +32,15 @@ public class BrandServiceImpl implements IBrandService {
     public Brand getById(String id) {
         return brandRepository.findById(Long.parseLong(id))
                 .orElse(null);
+    }
+
+    @Override
+    public Brand update(String id, BrandDTO dto) {
+        Brand brand = getById(id);
+        if (brand != null){
+            dtoToObject(dto, brand);
+        }
+        return brand;
     }
 
     @Override
@@ -46,15 +52,6 @@ public class BrandServiceImpl implements IBrandService {
              System.out.println(e.getMessage());
         }
         return false;
-    }
-
-    @Override
-    public Brand update(String id, BrandDTO dto) {
-        Brand brand = getById(id);
-        if (brand != null){
-            dtoToObject(dto, brand);
-        }
-        return brand;
     }
 
         private void dtoToObject(BrandDTO dto, Brand brand){

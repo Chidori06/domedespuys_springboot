@@ -14,19 +14,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/image")
 public class ImageRestController {
 
-    private final IImageService imageService;
+//    private final IImageService imageService;
 
-    @PostMapping
-    @JsonView(ImageView.ImageListView.class)
-    public Image createImage(@RequestBody ImageDTO dto, Product product){
-        return imageService.create(dto, product);
-    }
-
-    @DeleteMapping("/{id}")
-    @JsonView(ImageView.ImageListView.class)
-    public boolean deleteImage(@PathVariable String id){
-        return imageService.delete(id);
-    }
+//    Plus besoin de ces routes car les images sont dans le produit.
+//    @PostMapping
+//    @JsonView(ImageView.ImageListView.class)
+//    public Image createImage(@RequestBody ImageDTO dto, Product product){
+//        return imageService.create(dto, product);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    @JsonView(ImageView.ImageListView.class)
+//    public boolean deleteImage(@PathVariable String id){
+//        return imageService.delete(id);
+//    }
 
 
 }

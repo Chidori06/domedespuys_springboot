@@ -23,8 +23,7 @@ public class AddressServiceImpl implements IAddressService {
         Address address = new Address();
         dtoToObject(dto, address);
         address.setCreatedAt(LocalDateTime.now());
-        String idUser = "7";
-        address.setUser(userRepository.findById(Long.parseLong(idUser)).orElse(null));
+        address.setUser(userRepository.findById(7L).orElse(null));
         addressRepository.saveAndFlush(address);
         return address;
     }

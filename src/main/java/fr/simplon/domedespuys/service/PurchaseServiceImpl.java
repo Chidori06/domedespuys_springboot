@@ -8,6 +8,7 @@ import fr.simplon.domedespuys.entity.Purchase;
 import fr.simplon.domedespuys.entity.PurchaseProduct;
 import fr.simplon.domedespuys.repository.AddressRepository;
 import fr.simplon.domedespuys.repository.PurchaseRepository;
+import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import fr.simplon.domedespuys.service.interfaces.IPurchaseProductService;
 import fr.simplon.domedespuys.service.interfaces.IPurchaseService;
 import fr.simplon.domedespuys.service.interfaces.IUserService;
@@ -25,9 +26,9 @@ import java.util.List;
 public class PurchaseServiceImpl implements IPurchaseService {
 
     private PurchaseRepository purchaseRepository;
-    private final AddressRepository addressRepository;
 
     private final IUserService userService;
+    public final IAddressService addressService;
     private final IPurchaseProductService purchaseProductService;
 
 
@@ -43,8 +44,7 @@ public class PurchaseServiceImpl implements IPurchaseService {
         purchase.setCreatedAt(LocalDateTime.now());
         purchase.setStatus(EnumPurchaseStatus.PENDING.getValue());
         purchase.setUser(userService.getById("8"));
-        purchase.setAddress(addressRepository.findById(Long.parseLong(dto.idAddress))
-                .orElseThrow(() -> new RuntimeException("Adresse introuvable")));
+        purchase.setAddress(addressService.getById(dto.idAddress));
         String number = "PUR-" + LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-ddHHmm"));
         purchase.setNumber(number);

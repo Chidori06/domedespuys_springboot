@@ -31,6 +31,7 @@ public class AddressServiceImpl implements IAddressService {
         return address;
     }
 
+    @Override
     public Address getById(String id) {
         return addressRepository.findById(Long.parseLong(id)).orElse(null);
     }

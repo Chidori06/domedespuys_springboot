@@ -3,9 +3,11 @@ package fr.simplon.domedespuys.service;
 import fr.simplon.domedespuys.dto.PurchasePostDTO;
 import fr.simplon.domedespuys.dto.PurchaseProductDTO;
 import fr.simplon.domedespuys.dto.PurchasePutDTO;
+import fr.simplon.domedespuys.entity.Address;
 import fr.simplon.domedespuys.entity.EnumPurchaseStatus;
 import fr.simplon.domedespuys.entity.Purchase;
 import fr.simplon.domedespuys.entity.PurchaseProduct;
+import fr.simplon.domedespuys.exception.InvalidAddressException;
 import fr.simplon.domedespuys.repository.PurchaseRepository;
 import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import fr.simplon.domedespuys.service.interfaces.IPurchaseProductService;
@@ -42,7 +44,11 @@ public class PurchaseServiceImpl implements IPurchaseService {
         Purchase purchase = new Purchase();
         purchase.setStatus(EnumPurchaseStatus.PENDING.getValue());
         purchase.setUser(userService.getById("8"));
-        purchase.setAddress(addressService.getById(dto.idAddress));
+        Address address = addressService.getById(dto.idAddress);
+        if (address == null){
+            throw new InvalidAddressException();
+        }
+        purchase.setAddress(address);
         String number = "PUR-" + LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-ddHHmm"));
         purchase.setNumber(number);
@@ -71,5 +77,10 @@ public class PurchaseServiceImpl implements IPurchaseService {
             purchaseRepository.saveAndFlush(purchase);
         }
         return purchase;
+    }
+
+    @Override
+    public boolean delete(String id) {
+        return false;
     }
 }

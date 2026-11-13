@@ -1,4 +1,4 @@
-package fr.simplon.domedespuys.service.interfaces;
+package fr.simplon.domedespuys.service.interfaces.dao;
 
 public interface IUpdate <T,D> {
     T update(String id, D dto);

@@ -3,8 +3,9 @@ package fr.simplon.domedespuys.service.interfaces;
 import fr.simplon.domedespuys.dto.ImageDTO;
 import fr.simplon.domedespuys.entity.Image;
 import fr.simplon.domedespuys.entity.Product;
+import fr.simplon.domedespuys.service.interfaces.dao.IDelete;
 
-public interface IImageService extends IDelete{
+public interface IImageService extends IDelete {
 
     Image create(ImageDTO dto, Product product);
 

@@ -1,4 +1,4 @@
-package fr.simplon.domedespuys.service.interfaces;
+package fr.simplon.domedespuys.service.interfaces.dao;
 
 import java.util.List;
 

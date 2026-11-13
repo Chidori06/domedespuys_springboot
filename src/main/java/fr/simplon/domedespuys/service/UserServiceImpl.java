@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class UserServiceImpl implements IUserService {
         user.setFirstname(dto.firstname);
         user.setLastname(dto.lastname);
         user.setPassword(dto.password);
-        user.setCreatedAt(LocalDate.now().atStartOfDay());
+        user.setCreatedAt(LocalDateTime.now());
         userRepository.saveAndFlush(user);
         return user;
     }

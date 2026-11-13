@@ -9,5 +9,6 @@ public class UserPutDTO {
 
     @NotBlank(message = "Le prénom doit être renseigné")
     public String firstname;
+
     public String phone;
 }

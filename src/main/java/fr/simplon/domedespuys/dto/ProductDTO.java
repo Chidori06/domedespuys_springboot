@@ -1,6 +1,7 @@
 package fr.simplon.domedespuys.dto;
 
-import fr.simplon.domedespuys.entity.Image;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
@@ -12,7 +13,8 @@ public class ProductDTO {
 
     public String description;
 
-    @NotBlank(message = "Le prix doit être renseigné")
+    @Min(value = 1L, message = "Le prix doit être de 1 minimum")
+    @Max(value = 30000L, message = "Le prix doit être inférieur à 30000,00 maximum")
     public int price;
 
     @NotBlank(message = "La marque doit être renseignée")

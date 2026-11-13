@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Purchase {
 
     @Column(nullable = false)
     @JsonView(PurchaseView.CreatedAt.class)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne(optional = false)

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,6 +55,7 @@ public class Address {
 
     @Column(nullable= false)
     @JsonView(AddressView.CreatedAt.class)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne(optional = false)

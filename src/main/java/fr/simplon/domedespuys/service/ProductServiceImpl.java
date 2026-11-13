@@ -57,7 +57,6 @@ public class ProductServiceImpl implements IProductService {
     private void dtoToObject(ProductDTO dto, Product product){
         product.setLabel(dto.label);
         product.setPrice(dto.price);
-        product.setCreatedAt(LocalDateTime.now());
         product.setBrand(brandService.getById(dto.idBrand));
         product.setSlug(slugger.slugify(dto.label));
     }

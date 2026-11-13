@@ -8,6 +8,6 @@ public class PurchasePostDTO {
 
     @NotBlank(message = "L'adresse doit être renseignée")
     public String idAddress;
-
+    
     public List<PurchaseProductDTO> orderProducts;
 }

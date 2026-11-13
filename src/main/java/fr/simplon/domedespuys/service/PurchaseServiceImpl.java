@@ -40,7 +40,6 @@ public class PurchaseServiceImpl implements IPurchaseService {
     @Transactional
     public Purchase create(PurchasePostDTO dto) {
         Purchase purchase = new Purchase();
-        purchase.setCreatedAt(LocalDateTime.now());
         purchase.setStatus(EnumPurchaseStatus.PENDING.getValue());
         purchase.setUser(userService.getById("8"));
         purchase.setAddress(addressService.getById(dto.idAddress));
@@ -51,7 +50,6 @@ public class PurchaseServiceImpl implements IPurchaseService {
         List<PurchaseProduct> orderProducts = new ArrayList<>();
         for (PurchaseProductDTO dtoProduct : dto.orderProducts) {
             PurchaseProduct purchaseProduct = purchaseProductService.create(purchase, dtoProduct);
-
             orderProducts.add(purchaseProduct);
         }
         purchase.setOrderProduct(orderProducts);

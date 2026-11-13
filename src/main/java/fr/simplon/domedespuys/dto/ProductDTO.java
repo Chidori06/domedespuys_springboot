@@ -20,5 +20,6 @@ public class ProductDTO {
     @NotBlank(message = "La marque doit être renseignée")
     public String idBrand;
 
+
     public List<ImageDTO> images;
 }

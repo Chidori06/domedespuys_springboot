@@ -4,13 +4,11 @@ import fr.simplon.domedespuys.dto.AddressDTO;
 import fr.simplon.domedespuys.entity.Address;
 import fr.simplon.domedespuys.entity.User;
 import fr.simplon.domedespuys.repository.AddressRepository;
-import fr.simplon.domedespuys.repository.UserRepository;
+import fr.simplon.domedespuys.repository.PurchaseRepository;
 import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import fr.simplon.domedespuys.service.interfaces.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 
 @Service
@@ -47,6 +45,8 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public boolean delete(String id) {
+        //Tenter de supprimer l'adresse si elle ne correspond
+        // à aucune commande (requête dans le repository)
         try {
             addressRepository.deleteById(Long.parseLong(id));
             return true;

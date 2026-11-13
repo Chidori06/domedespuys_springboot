@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import fr.simplon.domedespuys.view.BrandView;
 import fr.simplon.domedespuys.view.ProductView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

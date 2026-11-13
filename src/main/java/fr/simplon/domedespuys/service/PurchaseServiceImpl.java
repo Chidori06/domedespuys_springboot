@@ -6,7 +6,6 @@ import fr.simplon.domedespuys.dto.PurchasePutDTO;
 import fr.simplon.domedespuys.entity.EnumPurchaseStatus;
 import fr.simplon.domedespuys.entity.Purchase;
 import fr.simplon.domedespuys.entity.PurchaseProduct;
-import fr.simplon.domedespuys.repository.AddressRepository;
 import fr.simplon.domedespuys.repository.PurchaseRepository;
 import fr.simplon.domedespuys.service.interfaces.IAddressService;
 import fr.simplon.domedespuys.service.interfaces.IPurchaseProductService;
@@ -28,7 +27,7 @@ public class PurchaseServiceImpl implements IPurchaseService {
     private PurchaseRepository purchaseRepository;
 
     private final IUserService userService;
-    public final IAddressService addressService;
+    private final IAddressService addressService;
     private final IPurchaseProductService purchaseProductService;
 
 
